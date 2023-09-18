@@ -196,6 +196,9 @@ public class cadastroVIEW extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                conectaDAO c = new conectaDAO();
+                c.connectDB();
+                
                 new cadastroVIEW().setVisible(true);
             }
         });
