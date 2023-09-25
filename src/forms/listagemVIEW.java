@@ -7,6 +7,7 @@ package forms;
 import dao.ProdutosDAO;
 import dao.ProdutosDTO;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -86,6 +87,11 @@ public class listagemVIEW extends javax.swing.JFrame {
         jLabel2.setText("Vender Produto (ID)");
 
         btnVender.setText("Vender");
+        btnVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderActionPerformed(evt);
+            }
+        });
 
         btnVoltar.setText("Voltar");
         btnVoltar.addActionListener(new java.awt.event.ActionListener() {
@@ -95,6 +101,11 @@ public class listagemVIEW extends javax.swing.JFrame {
         });
 
         btnConsulta.setText("Consultar Vendas");
+        btnConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -153,6 +164,27 @@ public class listagemVIEW extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
+
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        ProdutosDAO produtoDAO = new ProdutosDAO();
+        
+        ProdutosDTO produto = new ProdutosDTO();
+        String status = id_produto_venda.getText();
+        produto.setStatus(status);
+        produtoDAO.venderProduto(produto);
+        
+        id_produto_venda.setText("");
+        
+        JOptionPane.showMessageDialog(null, "Produto vendido com sucesso!")
+        ;
+        
+    }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
+        // TODO add your handling code here:
+      vendidosVIEW telaVenda = new vendidosVIEW();
+      telaVenda.setVisible(true);
+    }//GEN-LAST:event_btnConsultaActionPerformed
 
     /**
      * @param args the command line arguments
