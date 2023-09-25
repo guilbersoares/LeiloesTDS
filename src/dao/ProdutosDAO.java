@@ -41,7 +41,7 @@ public class ProdutosDAO {
     }
         
                 public List<ProdutosDTO> listarProdutos() {
-                String sql = "SELECT * FROM produtos";
+                String sql = "SELECT * FROM produtos WHERE status = 'A Venda'";
                 
                 try {
                     PreparedStatement stmt = this.conn.prepareStatement(sql);
@@ -64,4 +64,42 @@ public class ProdutosDAO {
                     return null;
                 }
             }
+                
+                public void venderProduto(ProdutosDTO id){
+                    String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+                    try {
+                        PreparedStatement stmt = this.conn.prepareStatement(sql);
+                        stmt.setString(1, id.getStatus());
+                        stmt.execute();
+            
+                    } catch (Exception e) {
+                        System.out.println("Erro: " + e.getMessage());
+                    }
+                }
+                
+                public List<ProdutosDTO> listarProdutosVendidos() {
+                String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+                
+                try {
+                    PreparedStatement stmt = this.conn.prepareStatement(sql);
+                    ResultSet rs = stmt.executeQuery();            
+                    
+                    List<ProdutosDTO> listaProduto = new ArrayList<>();
+                    
+                    while (rs.next()) { 
+                        ProdutosDTO produtos = new ProdutosDTO();
+                        
+                        produtos.setId(rs.getInt("id"));
+                        produtos.setNome(rs.getString("nome"));
+                        produtos.setValor(rs.getInt("valor"));
+                        produtos.setStatus(rs.getString("status"));
+                        
+                        listaProduto.add(produtos);    
+                    }
+                    return listaProduto;
+                } catch (Exception e) {
+                    return null;
+                }
+                
+}
 }
